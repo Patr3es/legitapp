@@ -1,0 +1,1356 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000" media="(prefers-color-scheme: dark)">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="manifest" href="json/manifest.json" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel='apple-touch-icon' href='img/icon-192x192.png'>
+    <meta name="apple-mobile-web-app-title" content="Legit App">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#000" />
+    <link rel="apple-touch-startup-image" href="splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/750x1294.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/1242x2148.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/ipad_splash.png" media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/ipadpro1_splash.png" media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/ipadpro2_splash.png" media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/iphone13promax_splash.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/iphone12pro_splash.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="splashscreens/11.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome" href="/css/app-wa-8c8d788ad0ee06dbc9619ff907c22651.css?vsn=d">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css">
+    <title>Legit App</title>
+    <script>
+      // Function to save content to local storage
+      function saveToLocalStorage(id) {
+        const element = document.getElementById(id);
+        if (element) {
+          console.log(`Saving content for ${id}: ${element.innerHTML}`);
+          localStorage.setItem(id, element.innerHTML);
+        }
+      }
+      // Function to load content from local storage
+      function loadFromLocalStorage(id) {
+        const element = document.getElementById(id);
+        const savedContent = localStorage.getItem(id);
+        if (element && savedContent) {
+          console.log(`Loading content for ${id}: ${savedContent}`);
+          element.innerHTML = savedContent;
+        }
+      }
+      // IDs to save and load from local storage
+      const idsToStore = ["reference-number-result", "reference-number-result-2"];
+      // Load content from local storage on page load
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('Page loaded. Loading content from local storage.');
+        idsToStore.forEach(loadFromLocalStorage);
+        // Load the reference number from local storage
+        const storedReferenceNumber = localStorage.getItem('referenceNumber');
+        if (storedReferenceNumber) {
+          document.getElementById('referenceNumber').innerText = storedReferenceNumber;
+          console.log('Loaded reference number from localStorage:', storedReferenceNumber);
+        }
+      });
+      // Function to update the reference number in localStorage
+      function updateReferenceNumber() {
+        const referenceNumberElement = document.getElementById('referenceNumber');
+        const referenceNumber = referenceNumberElement.innerText;
+        localStorage.setItem('referenceNumber', referenceNumber);
+        console.log('Updated reference number in localStorage:', referenceNumber);
+      }
+      // Add event listener to update localStorage when the content is edited
+      document.getElementById('referenceNumber').addEventListener('input', () => {
+        clearTimeout(window.updateTimeout);
+        window.updateTimeout = setTimeout(updateReferenceNumber, 500);
+      });
+      // Add event listeners to save content to local storage on change
+      idsToStore.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('blur', () => {
+            console.log(`Element with ID ${id} lost focus.`);
+            saveToLocalStorage(id);
+          }); // Save on blur (focus out)
+        }
+      });
+      // Function to navigate to cert.html
+      function navigateToCert() {
+        updateReferenceNumber(); // Ensure the latest value is saved
+        idsToStore.forEach(saveToLocalStorage); // Save additional elements
+        setTimeout(() => {
+          window.location.href = 'cert.html';
+        }, 500); // Adding a delay to ensure the localStorage is updated
+      }
+    </script>
+  </head>
+  <body style="height: 1650px;">
+    <div style="height: 38px; padding-bottom: 4px;" class="navbar">
+      <div class="back-arrow">
+        <img style="width: 10px; padding-top: 2px" src="img/back.svg">
+      </div>
+      <div class="navbar-text">
+        <h1 id="referenceNumber" style="font-size: 15px;
+        color: #FFF;
+        font-weight: 600;
+        text-align: center!important; padding-left: 4px;">#1234567890</h1>
+      </div>
+      <img style="width: 20px; padding-bottom: 1px" src="img/share.svg">
+    </div>
+    <div class="rectangle-div">
+      <div style="display: flex;
+      width: 100%;
+      font-size: 14px;
+      position: relative;
+      justify-content: center;">
+        <img style="width: 100px;
+       
+      top: -50px;
+      position: relative; padding-right: 22px;
+      " data-original-src="https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a364b32e39ccf854.png" src="https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a364b32e39ccf854.png" alt="Image 1" onclick="changeContent()" class="image-brands">
+        <img style=" 
+      height: 100px;
+      top: -50px;
+      position: relative;" data-original-src="https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805ad9a76acf6fb75f1.png" src="https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805ad9a76acf6fb75f1.png" alt="Image 2" class="image-brands">
+      </div>
+      <div style="display: flex; align-items: center; flex-direction: column; font-size: 14px;  position: relative; top: -50px;">
+        <p id="firstParagraph" style="font-weight: 700; font-size: 16px;">Air Jordan</p>
+        <p id="secondParagraph" style="font-weight: 700; font-size: 16px; line-height: 18px;">Jordan 1</p>
+      </div>
+      <div style="display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+     font-size: 6px; color: #9c9ea5; letter-spacing: 1.25px; position: relative; top: -22px;">
+        <p style="">. . . . . . . . . . . . . . . . . . . .</p>
+        <img src="img/logo-app-full.svg" style="width: 100px; top: -8px ;
+      position: relative;">
+        <p style=" ">. . . . . . . . . . . . . . . . . . . .</p>
+      </div>
+      <style>
+        .authtext {
+          font-weight: 900;
+          padding: 2.25px 18.5px;
+          border-radius: 2px;
+          font-size: 18px;
+        }
+      </style>
+      <div style="  display: flex; align-items: center; flex-direction: column; font-size: 16px;  position: relative; top: -10.5px;">
+        <p id="gradientText" class="authtext" style="background: linear-gradient(90deg, #5f7ff3, #7bf8d8);">AUTHENTIC</p>
+        <div style="margin-top: 10px; display: flex; align-items: center; flex-direction: column; font-size: 12px; position: relative; font-weight: 400;">
+          <p id="reference-number-result">#1234567890</p>
+          <p id="completedOn" style="margin-bottom: 14px; line-height: 15px;">Completed on 1 Jul 2024, 10:00 PM</p>
+          </p>
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg style="width: 70px;
+    background-color: #fff;
+    padding: 2px 3px 2px 2px; border-radius: 4px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" style="enable-background:new 0 0 1000 1000;" xml:space="preserve">
+            <style type="text/css">
+              .st0 {
+                fill: #FFFFFF;
+              }
+            </style>
+            <rect x="360" y="0" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="0" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="0" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="0" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="0" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="40" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="40" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="40" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="80" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="80" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="80" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="80" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="80" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="120" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="360" y="120" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="120" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="120" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="120" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="120" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="120" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="160" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="160" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="160" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="160" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="200" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="200" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="200" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="200" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="200" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="200" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="200" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="200" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="240" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="240" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="240" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="240" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="240" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="280" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="280" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="280" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="280" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="0" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="80" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="120" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="160" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="200" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="240" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="760" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="840" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="880" y="320" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="40" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="120" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="160" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="280" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="760" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="360" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="0" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="80" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="120" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="160" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="200" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="240" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="880" y="400" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="40" y="440" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="440" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="360" y="440" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="440" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="440" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="440" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="0" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="40" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="120" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="200" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="240" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="280" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="760" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="840" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="920" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="480" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="0" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="120" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="280" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="760" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="520" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="0" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="80" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="160" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="240" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="880" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="920" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="560" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="0" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="200" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="280" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="360" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="920" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="600" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="0" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="80" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="240" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="280" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="760" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="840" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="640" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="680" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="360" y="680" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="680" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="680" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="680" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="680" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="360" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="880" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="920" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="720" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="760" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="360" y="760" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="760" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="760" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="760" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="760" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="840" y="760" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="440" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="760" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="840" y="800" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="600" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="920" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="840" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="880" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="880" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="880" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="880" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="880" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="880" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="880" y="880" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="880" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="520" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="640" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="680" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="720" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="760" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="800" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="840" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="920" y="920" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="320" y="960" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="360" y="960" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="400" y="960" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="480" y="960" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="560" y="960" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="880" y="960" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="920" y="960" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="960" y="960" shape-rendering="crispEdges" width="40" height="40" />
+            <rect x="0" y="0" shape-rendering="crispEdges" width="280" height="280" />
+            <rect x="40" y="40" shape-rendering="crispEdges" class="st0" width="200" height="200" />
+            <rect x="720" y="0" shape-rendering="crispEdges" width="280" height="280" />
+            <rect x="760" y="40" shape-rendering="crispEdges" class="st0" width="200" height="200" />
+            <rect x="80" y="80" shape-rendering="crispEdges" width="120" height="120" />
+            <rect x="800" y="80" shape-rendering="crispEdges" width="120" height="120" />
+            <rect x="0" y="720" shape-rendering="crispEdges" width="280" height="280" />
+            <rect x="40" y="760" shape-rendering="crispEdges" class="st0" width="200" height="200" />
+            <rect x="80" y="800" shape-rendering="crispEdges" width="120" height="120" />
+          </svg>
+          <p style="font-size: 10px; color: #9c9ea5; font-weight: 400; padding-top: 12px;">🔍 Scan QR code to view the certificate.</p>
+        </div>
+      </div>
+    </div>
+    <div style="position: relative;
+width: 100%;
+top: 70.25px;
+border-bottom: 1px solid #272a30;"></div>
+    <div style="position: relative;
+top: 74px;
+padding-left: 20px; padding-top: 12.25px;font-weight: 700; font-size: 14px;">
+      <p>Uploaded Photos</p>
+    </div>
+    <div style="position: relative;
+top: 88px;" class="images">
+      <div class="grid-container">
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(1)">
+            <div class="image-wrapper">
+              <img id="image1" src="img/icon_take_photo_cam.png" alt="Image 1">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(2)">
+            <div class="image-wrapper">
+              <img id="image2" src="img/icon_take_photo_cam.png" alt="Image 2">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(3)">
+            <div class="image-wrapper">
+              <img id="image3" src="img/icon_take_photo_cam.png" alt="Image 3">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(4)">
+            <div class="image-wrapper">
+              <img id="image4" src="img/icon_take_photo_cam.png" alt="Image 4">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(5)">
+            <div class="image-wrapper">
+              <img id="image5" src="img/icon_take_photo_cam.png" alt="Image 5">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(6)">
+            <div class="image-wrapper">
+              <img id="image6" src="img/icon_take_photo_cam.png" alt="Image 6">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(7)">
+            <div class="image-wrapper">
+              <img id="image7" src="img/icon_take_photo_cam.png" alt="Image 7">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(8)">
+            <div class="image-wrapper">
+              <img id="image8" src="img/icon_take_photo_cam.png" alt="Image 8">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(9)">
+            <div class="image-wrapper">
+              <img id="image9" src="img/icon_take_photo_cam.png" alt="Image 9">
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="image-container" onclick="handleImageClick(10)">
+            <div class="image-wrapper">
+              <img id="image10" src="img/icon_take_photo_cam.png" alt="Image 10">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="position: relative;
+    top: 74px;
+    padding-left: 20px;
+    margin-top: 32px;
+    font-weight: 700;
+    font-size: 14px;
+    border-top: 1px solid #272a30;
+    padding-top: 20px;">
+      <p>Authentication Results</p>
+    </div>
+    <div style="position: relative;
+    top: 74px;
+    margin-top: 18px;
+    font-weight: 700;
+    font-size: 14px;
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;">
+      <img id="newPhoto" style="width: 44px; padding-bottom: 9px; position: relative; top: -1px;" src="img/authentic.svg">
+      <script>
+        document.getElementById("newPhoto").addEventListener("click", function() {
+          // Create new grid item elements
+          const newGridItem = document.createElement("div");
+          newGridItem.className = "grid-item";
+          const newImageContainer = document.createElement("div");
+          newImageContainer.className = "image-container";
+          newImageContainer.onclick = function() {
+            handleImageClick(11);
+          }; // Assuming 11 is the new image ID
+          const newImageWrapper = document.createElement("div");
+          newImageWrapper.className = "image-wrapper";
+          const newImage = document.createElement("img");
+          newImage.id = "image11"; // Set the new image ID
+          newImage.src = "img/shoe14.png"; // Set the new image source
+          newImage.alt = "Image 11";
+          // Append new elements to the grid
+          newImageWrapper.appendChild(newImage);
+          newImageContainer.appendChild(newImageWrapper);
+          newGridItem.appendChild(newImageContainer);
+          // Find the existing grid container and append the new grid item
+          const gridContainer = document.querySelector(".grid-item").parentNode;
+          gridContainer.appendChild(newGridItem);
+        });
+      </script>
+      <h1 style="font-size: 16px; margin-bottom: 4px;">AUTHENTIC</h1>
+      <p id="reference-number-result-2" style="color: #6b717f; font-size: 10px; padding-bottom: 4px; font-weight: 600">#1234567890</p>
+      <p id="completedAt" style="color: #6b717f; font-size: 10px; padding-bottom: 4px; font-weight: 600">Completed at: 1 Jul 2024, at 10:00 PM</p>
+      </p>
+      <p style="color: #6b717f; font-size: 10px; width: 90%; font-weight: 600">Checked by: Kwentin, Sneaker Expert (#46140), Kakarotto, Sneaker Expert...</p>
+      <p style="font-size: 12px;
+    font-weight: 400;
+    background-color: #17191e;
+    color: #6b717f;
+    padding: 7.5px 12px;
+    margin-top: 19.75px;
+    border-radius: 2px;
+    letter-spacing: -0.1px;">Based on the provided photos, your item is authentic.</p>
+      <div style="width: 100%; display: flex;">
+        <button class="clickable" onclick="navigateToCert()" style="font-size: 14px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #764bf6, #50b0f9);
+    color: #fff;
+    height: 48px;
+    padding: 7px 12px;
+    margin-top: 20px;
+    margin-left: 20px; margin-right: 20px;
+    border-radius: 2px; width: 100%; border: 0px!important; font-family: 'Montserrat';"><i style="padding-right: 10px; font-size: 18px; position: relative; top: 2px;" class="fa-regular fa-shield-check"></i>GET CERTIFICATE FOR FREE</button>
+      </div>
+      <div style="width: 242px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #17191e;
+    font-weight: 600;
+    color: #6b717f;
+    padding: 15.5px 20px;
+    border-radius: 99px;
+    font-size: 13px;
+    margin-top: 20px;">
+        <p>Check conversation records</p>
+        <img style="width: 18px;" src="img/arrow.svg">
+      </div>
+    </div>
+    <div style="position: relative;
+    top: 74px;
+    padding-left: 20px;
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    border-top: 1px solid #272a30;
+    padding-top: 16px;">
+      <p>Reviews from Authenticators</p>
+    </div>
+    <div style="display: flex;
+    position: relative;
+    top: 93.5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #17191e; flex-direction: column; padding: 16px 20px; border-radius: 4px">
+      <div style="display: flex;">
+        <div>
+          <img style="width: 30px;
+    border-radius: 50px;" src="https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202303050b86fccfa8f4272a.jpg">
+        </div>
+        <div style="padding-left: 10px;">
+          <p style="font-weight: 600">Kwentin, Sneaker Expert (#46140)</p>
+          <p id="checkerOne" style="font-size: 10px; color: #6b717f; padding-top: 2px;">1 Jul 2024, 9:57 PM</p>
+        </div>
+        <div style="display: flex;
+    width: 50%;
+    justify-content: flex-end;">
+          <div>
+            <p style="background: linear-gradient(to right, #363a44, #272d3b); font-size: 10px; padding: 5px 12px 5px 12px; border-radius: 2px;">Profile</p>
+          </div>
+        </div>
+      </div>
+      <p style="padding-top: 8px">AUTHENTIC</p>
+    </div>
+    <div style="display: flex;
+    position: relative;
+    top: 93.5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #17191e; flex-direction: column; padding: 16px 20px; border-radius: 4px; margin-top: 20px;">
+      <div style="display: flex;">
+        <div>
+          <img style="width: 30px;
+    border-radius: 50px;" src="https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202205203d78d61668627e0e.jpg">
+        </div>
+        <div style="padding-left: 10px;">
+          <p style="font-weight: 600">Kakarotto, Sneaker Expert (#315546)</p>
+          <p id="checkerTwo" style="font-size: 10px; color: #6b717f; padding-top: 2px;">1 Jul 2024, 10:00 PM</p>
+        </div>
+        <div style="display: flex;
+    width: 50%;
+    justify-content: flex-end;">
+          <div>
+            <p style="background: linear-gradient(to right, #363a44, #272d3b); font-size: 10px; padding: 5px 12px 5px 12px; border-radius: 2px;">Profile</p>
+          </div>
+        </div>
+      </div>
+      <p style="padding-top: 8px">AUTHENTIC</p>
+    </div>
+    <div style="position: relative;
+    top: 73.25px;
+    padding-left: 20px;
+    margin-top: 36px;
+    font-weight: 700;
+    font-size: 14px;
+    border-top: 1px solid #272a30;
+    padding-top: 16px;"></div>
+    <div style="width: 100%; display: flex;">
+      <button style="font-size: 14px;
+    font-weight: 600;
+    background-color: #000;
+    color: #fff;
+    height: 48px;
+    padding: 7px 12px;
+    margin-top: 77px;
+    margin-left: 20px; margin-right: 20px;
+    border-radius: 2px; width: 100%; font-family: 'Montserrat'; border: 2px solid #fff;">GET HELP</button>
+    </div>
+    <div style="position: fixed;
+  background-color: #17191e;
+  width: 100%;
+  bottom: 0;
+  height: 100px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+">
+      <!-- Drag Notch -->
+      <div style="
+    width: 25px;
+    height: 2px;
+    /* border-left: 6px solid transparent; */
+    /* border-right: 6px solid transparent; */
+    /* border-bottom: 6px solid #ffffff; */
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #6b717e;
+    border-radius: 24px"></div>
+      <div style="
+    margin-left: 14.25px;
+    /* background-color: #b6403d; */
+    /* width: 12px; */
+    /* height: 12px; */
+    /* border-radius: 27px; */
+    /* margin-right: 8px; */
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    line-height: 5px;
+    position: relative; top:-14px;">
+        <p style="color: #393d45; font-size: 10px">.</p>
+        <p style="color: #494d57; font-size: 10px">.</p>
+        <p style="color: #5b606c; font-size: 10px">.</p>
+        <p style="color: #b6403d; font-size: 110px;
+    top: -25px;
+    position: relative;">.</p>
+      </div>
+      <div style="
+    margin-right: 28px;
+    font-size: 10px;
+    color: #6b717e; font-weight: 600; padding-left: 2px;
+  position: relative; top: 2px;">
+        <p id="date" onclick="updateDate()">1 Jul</p>
+        <p id="time" onclick="updateTime()">22:00</p>
+      </div>
+      <div style="
+    margin-right: 14px;
+    font-size: 10px;
+    color: #fff; font-weight: 600; position: relative; top: 2px;
+  ">
+        <p>Final Result:</p>
+        <p>The result is AUTHENTIC</p>
+      </div>
+    </div>
+  </body>
+  <style>
+    /* Styles for the generated QR code */
+    #qrCode {
+      background-color: #fff;
+      padding: 4px;
+      border-radius: 4px;
+      width: 58px;
+      margin-bottom: 12px;
+    }
+  </style>
+  <script>
+    function handleImageClick(imageIndex) {
+      const imageElement = document.getElementById("image" + imageIndex);
+      // Check if the clicked image has the class "image-brands"
+      if (imageElement.classList.contains("image-brands")) {
+        alert("Watermarking is not allowed for this image.");
+        return;
+      }
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+      fileInput.addEventListener("change", handleImageUpload);
+      fileInput.style.display = "none";
+      document.body.appendChild(fileInput);
+      fileInput.click();
+
+      function handleImageUpload(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageElement = document.getElementById("image" + imageIndex);
+          const watermark = new Image();
+          watermark.src = "";
+          watermark.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = imageElement.width;
+            canvas.height = imageElement.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(watermark, 0, 0, canvas.width, canvas.height);
+            imageElement.src = canvas.toDataURL();
+          };
+          imageElement.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+  <script>
+    function changeContent() {
+      const brandModel = window.prompt(`Choose brand and model:
+      1. Air Jordan Jordan 1
+      2. Air Jordan Jordan 5
+      3. Nike Air Force
+      4. Nike Dunk
+      5. BAPE Sneakers
+      6. Dior Clothing
+      7. Nike Other
+      8. Balenciaga Shoes
+      9. BAPE Clothing
+      10. Prada Clothing
+      11. Air Jordan Jordan 6
+      12. Air Jordan Jordan 11
+      13. Burberry Clothing
+      14. Canada Goose Clothing
+      15. Louis Vuitton Clothing
+      16. Cartier Bracelet
+      17. Yeezy Yeezy Boost 350
+      18. Moncler Clothing
+      19. THE NORTH FACE Clothing
+      20. Nike Clothing
+      21. Supreme Tops/Sweatshirts
+      22. Nike Yeezy
+      `);
+      if (brandModel !== null) {
+        const firstParagraph = document.getElementById('firstParagraph');
+        const secondParagraph = document.getElementById('secondParagraph');
+        const firstImage = document.querySelector('img[data-original-src="https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a364b32e39ccf854.png"]');
+        const secondImage = document.querySelector('img[data-original-src="https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805ad9a76acf6fb75f1.png"]');
+        switch (brandModel) {
+          case '1':
+            firstParagraph.textContent = 'Air Jordan';
+            secondParagraph.textContent = 'Jordan 1';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a364b32e39ccf854.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805ad9a76acf6fb75f1.png';
+            break;
+          case '2':
+            firstParagraph.textContent = 'Air Jordan';
+            secondParagraph.textContent = 'Jordan 5';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a364b32e39ccf854.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805d040bd8ad849f1fd.png';
+            break;
+          case '3':
+            firstParagraph.textContent = 'Nike';
+            secondParagraph.textContent = 'Air Force';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008057146e477927daff3.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805b29cd35aee458760.png';
+            break;
+          case '4':
+            firstParagraph.textContent = 'Nike';
+            secondParagraph.textContent = 'Dunk';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008057146e477927daff3.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20201113527740b273071a8b.png';
+            break;
+          case '5':
+            firstParagraph.textContent = 'BAPE';
+            secondParagraph.textContent = 'Sneakers';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008059fe7617b4fc57d50.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/2020081787f7a0e48b411121.png';
+            break;
+          case '6':
+            firstParagraph.textContent = 'Dior';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805929271894c63c928.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008175656fafbac69eb61.png';
+            break;
+          case '7':
+            firstParagraph.textContent = 'Nike';
+            secondParagraph.textContent = 'Other';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008057146e477927daff3.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/2021011160b8dcdc28efff97.png';
+            break;
+          case '8':
+            firstParagraph.textContent = 'Balenciaga';
+            secondParagraph.textContent = 'Shoes';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805f35a8061c241166d.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200817c16d63504b63f20f.png';
+            break;
+          case '9':
+            firstParagraph.textContent = 'Bape';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008059fe7617b4fc57d50.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200817e1ea2f22e6f98eae.png';
+            break;
+          case '10':
+            firstParagraph.textContent = 'Prada';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008055331104ef59a61ad.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008176700ebff86226294.png';
+            break;
+          case '11':
+            firstParagraph.textContent = 'Air Jordan';
+            secondParagraph.textContent = 'Jordan 6';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a364b32e39ccf854.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805d877ba407b8a063c.png';
+            break;
+          case '12':
+            firstParagraph.textContent = 'Air Jordan';
+            secondParagraph.textContent = 'Jordan 11';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a364b32e39ccf854.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805420e9f1d3b3b181f.png';
+            break;
+          case '13':
+            firstParagraph.textContent = 'Burberry';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805e9e9d0bb5be85045.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200817ea693694444f0fcf.png';
+            break;
+          case '14':
+            firstParagraph.textContent = 'Canada Goose';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008105013953b4b2b9487.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/2020081734362e823e2fea6e.png';
+            break;
+          case '15':
+            firstParagraph.textContent = 'Louis Vuitton';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/2020080577a4ee919f3f54da.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200817aa343b8887eeccc0.png';
+            break;
+          case '16':
+            firstParagraph.textContent = 'Cartier';
+            secondParagraph.textContent = 'Bracelet';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200810b5615636e3469205.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20210819f57b1e06836407ba.png';
+            break;
+          case '17':
+            firstParagraph.textContent = 'Yeezy';
+            secondParagraph.textContent = 'Yeezy Boost 350';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805fc69204ea1fee5e0.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805b7eef7fc270db3a2.png';
+            break;
+          case '18':
+            firstParagraph.textContent = 'Moncler';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200810cbf838b6d7b9e018.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008170718e42da908f42d.png';
+            break;
+          case '19':
+            firstParagraph.textContent = 'THE NORTH FACE';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805d1082f2e2949d0fb.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200817b69bf30f6f5f753f.png';
+            break;
+          case '20':
+            firstParagraph.textContent = 'Nike';
+            secondParagraph.textContent = 'Clothing';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008057146e477927daff3.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20201223ce5cf1561422f148.png';
+            break;
+          case '21':
+            firstParagraph.textContent = 'Supreme';
+            secondParagraph.textContent = 'Tops/Sweatshirts';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805536cf4d15e821f13.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a100c3de984cbbc3.png';
+            break;
+          case '22':
+            firstParagraph.textContent = 'New Balance';
+            secondParagraph.textContent = 'Sneakers';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200810830ddee3b62e42ea.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200817c158c6c1ac11c002.png';
+            break;
+          case '23':
+            firstParagraph.textContent = 'Nike';
+            secondParagraph.textContent = 'Yeezy';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008057146e477927daff3.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20210111530cdae438584f4d.png';
+            break;
+          case '24':
+            firstParagraph.textContent = 'Chanel';
+            secondParagraph.textContent = 'Classic Double Flap Bag';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008052bb4609295b1b106.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202101064f857e85c9d1ef90.png';
+            break;
+          case '25':
+            firstParagraph.textContent = 'Goyard';
+            secondParagraph.textContent = 'Other';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805eaec347e71a82adb.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/2021010659a33da76c184f3a.png';
+            break;
+          case '26':
+            firstParagraph.textContent = 'Air Jordan';
+            secondParagraph.textContent = 'Jordan 4';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805a364b32e39ccf854.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008052dec82505d322a6d.png';
+            break;
+          case '27':
+            firstParagraph.textContent = 'Louis Vuitton';
+            secondParagraph.textContent = 'Shoes';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/2020080577a4ee919f3f54da.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200817bd460d6bd317fea1.png';
+            break;
+            case '28':
+            firstParagraph.textContent = 'Louis Vuitton';
+            secondParagraph.textContent = 'Other';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/2020080577a4ee919f3f54da.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/2021011118e6940a177ba770.png';
+            break;
+            case '29':
+            firstParagraph.textContent = 'Supreme';
+            secondParagraph.textContent = 'T-Shirts';
+            firstImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/20200805536cf4d15e821f13.png';
+            secondImage.src = 'https://legitapp-prod.oss-cn-hongkong.aliyuncs.com/202008056fe7ece51462a3ab.png';
+            break;
+          default:
+            alert('Invalid choice. Please try again.');
+            break;
+        }
+      }
+    }
+  </script>
+  <script>
+    // Function to generate QR code from the provided link
+    function generateQRCode() {
+      // Prompt the user to enter a link
+      const link = prompt("Enter the link for the QR code:");
+      // Check if the link is not empty and generate the QR code
+      if (link) {
+        // Generate the QR code using a QR code API
+        const qrCodeAPI = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent(link) + "&size=150x150";
+        const imgElement = document.createElement("img");
+        imgElement.src = qrCodeAPI;
+        imgElement.id = "qrCode";
+        // Replace the existing image with the generated QR code
+        const existingImage = document.getElementById("qrButton");
+        existingImage.parentNode.replaceChild(imgElement, existingImage);
+      } else {
+        alert("Please enter a valid link.");
+      }
+    }
+    // Event listener for the click on the image
+    document.getElementById("qrButton").addEventListener("click", generateQRCode);
+  </script>
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      /* Adjust the gap size as needed */
+      margin-left: 20px;
+      margin-right: 22px;
+      padding-top: 2.25px;
+    }
+
+    .grid-item {
+      width: 100%;
+      padding-top: 100%;
+      /* Creates a square by setting height based on width */
+      position: relative;
+    }
+
+    .image-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 1px solid #272a30;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .rectangle-div {
+      position: relative;
+      height: 356px;
+      overflow: hidden;
+      background-color: blue;
+      top: 40px;
+      margin-top: 48px;
+      overflow: inherit;
+      display: flex;
+      flex-direction: column;
+      margin: 0 20px;
+      margin-top: 88px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #1e2638, #070d1d);
+      align-items: center;
+    }
+
+    .image-wrapper::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('customers/watermark.png');
+      background-repeat: repeat;
+      opacity: 0.5;
+      /* Adjust the opacity as needed */
+      pointer-events: none;
+      /* Allow clicks to pass through the watermark */
+      background-size: 100% 100%;
+    }
+  </style>
+  <script>
+    // Function to update the content of the element with a prompt
+    function updateContentWithPrompt(element) {
+      var newContent = prompt("Edit the content:", element.innerHTML);
+      if (newContent !== null && newContent.trim() !== "") {
+        if (newContent.toLowerCase() === "hide") {
+          element.style.display = "none";
+        } else {
+          element.innerHTML = newContent;
+        }
+      }
+    }
+    // List of IDs to exclude
+    const excludedIds = ["referenceNumber", "reference-number-result", "reference-number-result-2", "completedAt", "checkerOne", "checkerTwo", "date", "time"];
+    // Get all "h1" and "p" elements
+    const headings = document.querySelectorAll("h1");
+    const paragraphs = document.querySelectorAll("p");
+    const links = document.querySelectorAll("a");
+    // Add event listeners to headings and paragraphs
+    headings.forEach(function(heading) {
+      if (!excludedIds.includes(heading.id)) {
+        heading.addEventListener("click", function() {
+          updateContentWithPrompt(this);
+        });
+      }
+    });
+    paragraphs.forEach(function(paragraph) {
+      if (!excludedIds.includes(paragraph.id)) {
+        paragraph.addEventListener("click", function() {
+          updateContentWithPrompt(this);
+        });
+      }
+    });
+    links.forEach(function(link) {
+      // Exclude the div with id "not" and its children from the event listener
+      if (link.id !== "not" && !link.closest("#not") && !excludedIds.includes(link.id)) {
+        link.addEventListener("click", function(event) {
+          updateContentWithPrompt(event.target);
+        });
+      }
+    });
+  </script>
+  <script>
+    function handleImageClick(imageIndex) {
+      const imageElement = document.getElementById("image" + imageIndex);
+      // Check if the clicked image has the class "image-brands"
+      if (imageElement.classList.contains("image-brands")) {
+        alert("Watermarking is not allowed for this image.");
+        return;
+      }
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+      fileInput.addEventListener("change", handleImageUpload);
+      fileInput.style.display = "none";
+      document.body.appendChild(fileInput);
+      fileInput.click();
+
+      function handleImageUpload(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageElement = document.getElementById("image" + imageIndex);
+          const imageUrl = e.target.result;
+          imageElement.src = imageUrl;
+          localStorage.setItem("image" + imageIndex, imageUrl);
+          console.log(`Saved image${imageIndex} to localStorage:`, imageUrl);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    // Load images from localStorage when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      for (let i = 1; i <= 10; i++) {
+        const storedImageUrl = localStorage.getItem(`image${i}`);
+        if (storedImageUrl) {
+          document.getElementById(`image${i}`).src = storedImageUrl;
+          console.log(`Loaded image${i} from localStorage:`, storedImageUrl);
+        }
+      }
+    });
+  </script>
+  <script>
+    // Function to update the localStorage
+    function updateLocalStorage() {
+      const referenceNumberElement = document.getElementById('referenceNumber');
+      const firstParagraphElement = document.getElementById('firstParagraph');
+      const secondParagraphElement = document.getElementById('secondParagraph');
+      const referenceNumber = referenceNumberElement.innerText;
+      const firstParagraph = firstParagraphElement.innerText;
+      const secondParagraph = secondParagraphElement.innerText;
+      localStorage.setItem('referenceNumber', referenceNumber);
+      localStorage.setItem('firstParagraph', firstParagraph);
+      localStorage.setItem('secondParagraph', secondParagraph);
+      console.log('Updated localStorage:', {
+        referenceNumber,
+        firstParagraph,
+        secondParagraph
+      });
+    }
+    // Add event listener to update localStorage when the content is edited
+    document.getElementById('referenceNumber').addEventListener('input', () => {
+      clearTimeout(window.updateTimeout);
+      window.updateTimeout = setTimeout(updateLocalStorage, 500);
+    });
+    document.getElementById('firstParagraph').addEventListener('input', () => {
+      clearTimeout(window.updateTimeout);
+      window.updateTimeout = setTimeout(updateLocalStorage, 500);
+    });
+    document.getElementById('secondParagraph').addEventListener('input', () => {
+      clearTimeout(window.updateTimeout);
+      window.updateTimeout = setTimeout(updateLocalStorage, 500);
+    });
+    // Set initial values from localStorage if available
+    document.addEventListener('DOMContentLoaded', () => {
+      const storedReferenceNumber = localStorage.getItem('referenceNumber');
+      const storedFirstParagraph = localStorage.getItem('firstParagraph');
+      const storedSecondParagraph = localStorage.getItem('secondParagraph');
+      if (storedReferenceNumber) {
+        document.getElementById('referenceNumber').innerText = storedReferenceNumber;
+      }
+      if (storedFirstParagraph) {
+        document.getElementById('firstParagraph').innerText = storedFirstParagraph;
+      }
+      if (storedSecondParagraph) {
+        document.getElementById('secondParagraph').innerText = storedSecondParagraph;
+      }
+      console.log('Loaded from localStorage:', {
+        storedReferenceNumber,
+        storedFirstParagraph,
+        storedSecondParagraph
+      });
+    });
+    // Function to navigate to cert.html
+    function navigateToCert() {
+      updateLocalStorage(); // Ensure the latest values are saved
+      setTimeout(() => {
+        window.location.href = 'cert.html';
+      }, 500); // Adding a delay to ensure the localStorage is updated
+    }
+  </script>
+  <script>
+        // Function to update all reference number elements
+        function updateReferenceNumbers(newReferenceNumber) {
+            document.getElementById('reference-number-result').innerText = newReferenceNumber;
+            document.getElementById('reference-number-result2').innerText = newReferenceNumber;
+        }
+
+        // Function to handle input event on referenceNumber
+        function handleReferenceNumberChange() {
+            const referenceNumberElement = document.getElementById('referenceNumber');
+            const newReferenceNumber = referenceNumberElement.innerText;
+            updateReferenceNumbers(newReferenceNumber);
+        }
+
+        // Add event listener to update reference numbers when the content is edited
+        document.getElementById('referenceNumber').addEventListener('input', () => {
+            clearTimeout(window.updateTimeout);
+            window.updateTimeout = setTimeout(handleReferenceNumberChange, 300);
+        });
+
+        // Initialize the reference numbers on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            handleReferenceNumberChange();
+        });
+    </script>
+    <script>
+    // Function to update all reference number elements
+    function updateReferenceNumbers(newReferenceNumber) {
+        document.getElementById('reference-number-result').innerText = newReferenceNumber;
+        document.getElementById('reference-number-result-2').innerText = newReferenceNumber;
+    }
+
+    // Function to handle reference number changes
+    function handleReferenceNumberChange(newReferenceNumber) {
+        document.getElementById('referenceNumber').innerText = newReferenceNumber;
+        updateReferenceNumbers(newReferenceNumber);
+    }
+
+    // Function to generate a random 16-digit number prefixed with #
+    function generateRandomReferenceNumber() {
+        let randomNumber = '#';
+        for (let i = 0; i < 16; i++) {
+            randomNumber += Math.floor(Math.random() * 10);
+        }
+        return randomNumber;
+    }
+
+    // Simulate a popup function that changes the reference number
+    function simulatePopupChange() {
+        const newReferenceNumber = generateRandomReferenceNumber();
+        handleReferenceNumberChange(newReferenceNumber);
+    }
+
+    // Attach the simulatePopupChange function to a button for demonstration purposes
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('referenceNumber').addEventListener('click', simulatePopupChange);
+    });
+</script>
+<script>
+        // Function to update the content of the element with a prompt
+        function updateContentWithPrompt(element) {
+            var newContent = prompt("Edit the content:", element.innerHTML);
+            if (newContent !== null && newContent.trim() !== "") {
+                if (newContent.toLowerCase() === "hide") {
+                    element.style.display = "none";
+                } else {
+                    element.innerHTML = newContent;
+                    // Save to localStorage and update other elements if it's the completedOn element
+                    if (element.id === "completedOn") {
+                        localStorage.setItem("completedOn", newContent);
+                        updateRelatedElements(newContent);
+                    }
+                }
+            }
+        }
+
+        // Function to format the date for various elements
+        function formatDateForElements(date) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const month = months[date.getMonth()];
+            const day = date.getDate();
+            const year = date.getFullYear();
+            const hours = date.getHours();
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = (hours % 12 || 12).toString();
+            const timeString = `${formattedHours}:${minutes} ${period}`;
+
+            const dateFormatted = `${day} ${month} ${year}`;
+            const time24 = `${hours.toString().padStart(2, '0')}:${minutes}`;
+            const dateShort = `${day} ${month}`;
+
+            return {
+                dateFormatted,
+                timeString,
+                time24,
+                dateShort
+            };
+        }
+
+        // Function to subtract minutes from a date
+        function subtractMinutes(date, minutes) {
+            return new Date(date.getTime() - minutes * 60000);
+        }
+
+        // Function to update related elements
+        function updateRelatedElements(completedOnText) {
+            const dateString = completedOnText.replace("Completed on ", "").trim();
+            const date = new Date(dateString);
+
+            if (!isNaN(date)) {
+                const formattedDate = formatDateForElements(date);
+                document.getElementById('completedAt').innerHTML = `Completed at: ${formattedDate.dateFormatted}, at ${formattedDate.timeString}`;
+
+                const checkerOneDate = subtractMinutes(date, 3);
+                const formattedCheckerOne = formatDateForElements(checkerOneDate);
+                document.getElementById('checkerOne').innerHTML = `${formattedCheckerOne.dateFormatted}, ${formattedCheckerOne.timeString}`;
+
+                document.getElementById('checkerTwo').innerHTML = `${formattedDate.dateFormatted}, ${formattedDate.timeString}`;
+                document.getElementById('date').innerHTML = formattedDate.dateShort;
+                document.getElementById('time').innerHTML = formattedDate.time24;
+            } else {
+                console.error('Invalid date string:', dateString);
+            }
+        }
+
+        // Load the completedOn value from localStorage if available
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedCompletedOn = localStorage.getItem('completedOn');
+            if (savedCompletedOn) {
+                document.getElementById('completedOn').innerHTML = savedCompletedOn;
+                updateRelatedElements(savedCompletedOn);
+            }
+        });
+
+        // Add event listener to the completedOn paragraph
+        document.getElementById('completedOn').addEventListener('click', function() {
+            updateContentWithPrompt(this);
+        });
+
+        // Placeholder functions for date and time update
+        function updateDate() {
+            alert("Update date functionality can be added here.");
+        }
+
+        function updateTime() {
+            alert("Update time functionality can be added here.");
+        }
+    </script>
